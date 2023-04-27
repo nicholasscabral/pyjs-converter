@@ -2,6 +2,7 @@ import re
 import json
 
 
+
 def convert_python_to_javascript(python_code):
     # Define the dictionary to map Python keywords to JavaScript equivalents
     keyword_dict = {
@@ -68,15 +69,25 @@ def convert_python_to_javascript(python_code):
     return javascript_code
 
 
-python_code = """
-var x = 1
-var y = 2
-var z = x + y
-if z > 2:
-    print("z is greater than 2")
-else:
-    print("z is less than or equal to 2")
-"""
+# python_code = """
+# var x = 1
+# var y = 2
+# var z = x + y
+# if z > 2:
+#     print("z is greater than 2")
+# else:
+#     print("z is less than or equal to 2")
+# """
+
+# Prompt the user to enter a file path
+python_input = input("Enter file path: ")
+
+# Open the file and read its contents
+with open(python_input, "r") as file:
+    python_code = file.read()
+    
+# Print the contents of the file
+print(python_code)
 
 javascript_code = convert_python_to_javascript(json.dumps(python_code))
 
