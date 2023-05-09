@@ -1,8 +1,8 @@
 x = 1
 y = 2
 z = x + y
-if z > 2:
-    print("z is greater than 2")
+if z > 2 : 
+    print ( " z is greater than 2 " )
 elif 0 < z < 2:
     print("z is greater than 0 but less than 2")
 else:

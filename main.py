@@ -68,19 +68,9 @@ def convert_python_to_javascript(python_code):
 
     return javascript_code
 
-
-# python_code = """
-# var x = 1
-# var y = 2
-# var z = x + y
-# if z > 2:
-#     print("z is greater than 2")
-# else:
-#     print("z is less than or equal to 2")
-# """
-
 # Prompt the user to enter a file path
-python_input = input("Enter file path: ")
+python_input = input("Enter file path to read: ")
+javascript_output = input("Enter file path to write: ")
 
 # Open the file and read its contents
 with open(python_input, "r") as file:
@@ -100,3 +90,14 @@ lines = output.split('\\n')
 # Print each line separately
 for line in lines:
     print(line)
+
+#Write on file
+write_on_file = lambda f, newlines : [f.write("\n" + line)for line in lines]
+write_on_file (open (javascript_output, "w"), lines)
+
+
+#analisar o tipo da expressao e fazer um pre processamento das variaveis no escopo
+#nomes de variaveis devem ser unicos! nao podem se repetir (primeiro a gente assume que o codigo do usuario vai satisfazer essa condicoes, depois a gente pensa em casos de teste e erro)
+#declarar todas as variaveis no escopo global
+#testar se o codigo de entrada e compilavel ou nao
+
