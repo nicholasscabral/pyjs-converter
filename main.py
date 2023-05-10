@@ -2,7 +2,6 @@ import re
 import json
 
 
-
 def convert_python_to_javascript(python_code):
     # Define the dictionary to map Python keywords to JavaScript equivalents
     keyword_dict = {
@@ -30,12 +29,15 @@ def convert_python_to_javascript(python_code):
         python_code = re.sub(r'\b{}\b'.format(
             python_keyword), js_keyword, python_code)
 
+    # Replace '=' with 'var'
+    python_code = re.sub(r'(\b\w+\b)\s*=\s*', 'var \\1 = ', python_code)
+
     # Replace Python-style string formatting with JavaScript-style string formatting
     python_code = re.sub(r'(\{.*?\})', '{$1}', python_code)
     python_code = re.sub(r'%\((.*?)\)[sd]', '{$1}', python_code)
 
     # Add semicolons at the end of statements if they don't already exist
-    python_code = re.sub(r'([^;])\n', '\\1;\n', python_code)
+    python_code = re.sub(r'([^;])\n', '\\1;', python_code)
 
     # Convert Python for loop to JavaScript
     python_code = re.sub(
@@ -46,20 +48,16 @@ def convert_python_to_javascript(python_code):
     python_code = re.sub(r'else\s*:', r'} else {', python_code)
     python_code = re.sub(r'elif\s+(.*?)\s*:', r'} else if (\1) {', python_code)
 
-    # Convert Python-style variable declaration to JavaScript-style declaration
-    python_code = re.sub(
-        r'\bvar\s+(\w+)\b', r'var \1', python_code)
-
     # Convert indentation to braces
     indent_level = 0
     new_lines = []
     for line in python_code.splitlines():
         if line.startswith(' ' * indent_level):
-            line = '{' + line[indent_level:] + '\n'
+            line = '{' + line[indent_level:] + ';'
         elif line.startswith(' ' * (indent_level - 4)):
             indent_level -= 4
-            line = '}\n' + ' ' * indent_level + \
-                '{' + line[indent_level:] + '\n'
+            line = '};' + ' ' * indent_level + \
+                '{' + line[indent_level:] + ';'
         else:
             raise ValueError('Unexpected indentation level')
         new_lines.append(line)
@@ -68,36 +66,30 @@ def convert_python_to_javascript(python_code):
 
     return javascript_code
 
-# Prompt the user to enter a file path
-python_input = input("Enter file path to read: ")
-javascript_output = input("Enter file path to write: ")
 
-# Open the file and read its contents
-with open(python_input, "r") as file:
-    python_code = file.read()
-    
-# Print the contents of the file
-print(python_code)
+input_path = input('Enter input path: ')
+output_file_path = input("Enter output path: ")
 
-javascript_code = convert_python_to_javascript(json.dumps(python_code))
 
-# Remove the quotes around the string
-output = javascript_code.strip('"{').rstrip('}"')
+with open(input_path, 'r') as f:
+    python_code = f.read()
 
-# Split the string into lines
-lines = output.split('\\n')
+# Convert the Python code to JavaScript
+javascript_code = convert_python_to_javascript(python_code)
 
-# Print each line separately
+
+# Print the formatted JavaScript code
+formatted_code = re.sub(r';{2,}', ';', javascript_code)
+formatted_code = formatted_code[1:] + ';}'
+lines = formatted_code.split(';')
 for line in lines:
-    print(line)
+    if line:
+        print('    ' + line.strip())
+        with open(output_file_path, 'a') as f:
+            f.write('    ' + line.strip() + '\n')
 
-#Write on file
-write_on_file = lambda f, newlines : [f.write("\n" + line)for line in lines]
-write_on_file (open (javascript_output, "w"), lines)
 
-
-#analisar o tipo da expressao e fazer um pre processamento das variaveis no escopo
-#nomes de variaveis devem ser unicos! nao podem se repetir (primeiro a gente assume que o codigo do usuario vai satisfazer essa condicoes, depois a gente pensa em casos de teste e erro)
-#declarar todas as variaveis no escopo global
-#testar se o codigo de entrada e compilavel ou nao
-
+# analisar o tipo da expressao e fazer um pre processamento das variaveis no escopo
+# nomes de variaveis devem ser unicos! nao podem se repetir (primeiro a gente assume que o codigo do usuario vai satisfazer essa condicoes, depois a gente pensa em casos de teste e erro)
+# declarar todas as variaveis no escopo global
+# testar se o codigo de entrada e compilavel ou nao
