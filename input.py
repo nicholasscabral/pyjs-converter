@@ -1,5 +1,5 @@
-x = 1asdfasdf
-ysdf = 2
+x = 1
+y = 2
 z = x + y
 if z > 2:
     print("z is greater than 2")
