@@ -2,6 +2,14 @@ import re
 import json
 
 
+def is_python_code_valid(python_code):
+    try:
+        compile(python_code, "<string>", "exec")
+        return True
+    except SyntaxError:
+        return False
+
+
 def convert_python_to_javascript(python_code):
     # Define the dictionary to map Python keywords to JavaScript equivalents
     keyword_dict = {
@@ -73,6 +81,10 @@ output_file_path = input("Enter output path: ")
 
 with open(input_path, 'r') as f:
     python_code = f.read()
+
+if not is_python_code_valid(python_code):
+    print('PYTHON CODE NOT COMPILABLE, EXITING...')
+    exit(1)
 
 # Convert the Python code to JavaScript
 javascript_code = convert_python_to_javascript(python_code)
