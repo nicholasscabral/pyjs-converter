@@ -1,6 +1,6 @@
 import re
 import json
-
+from tkinter import filedialog
 
 def is_python_code_valid(python_code):
     try:
@@ -75,9 +75,13 @@ def convert_python_to_javascript(python_code):
     return javascript_code
 
 
-input_path = input('Enter input path: ')
-output_file_path = input("Enter output path: ")
+# input_path = input('Enter input path: ')
+input_path = filedialog.askopenfile(title="SELECIONE O ARQUIVO DE ENTRADA")
+input_path = input_path.name
 
+# output_file_path = input("Enter output path: ")
+output_file_path = filedialog.askopenfile(title="SELECIONE O ARQUIVO DE SAÍDA")
+output_file_path = output_file_path.name
 
 with open(input_path, 'r') as f:
     python_code = f.read()
