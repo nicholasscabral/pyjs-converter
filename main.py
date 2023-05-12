@@ -24,7 +24,7 @@ def convert_python_to_javascript(python_code):
         'elif': 'else if',
         'while': 'while',
         'for': 'for',
-        'in': 'in',
+        'in': 'of',
         'range': 'Array.from({length:',
         'len': '.length',
         'def': 'function',
@@ -38,7 +38,8 @@ def convert_python_to_javascript(python_code):
             python_keyword), js_keyword, python_code)
 
     # Replace '=' with 'var'
-    python_code = re.sub(r'(\b\w+\b)\s*=\s*', 'var \\1 = ', python_code)
+    python_code = re.sub(
+        r'for\s+(\w+)\s+in\s+range\((.*?)\)', r'for (let \1 = 0; \1 < \2; \1++)', python_code)
 
     # Replace Python-style string formatting with JavaScript-style string formatting
     python_code = re.sub(r'(\{.*?\})', '{$1}', python_code)
@@ -80,8 +81,7 @@ input_path = filedialog.askopenfile(title="SELECIONE O ARQUIVO DE ENTRADA")
 input_path = input_path.name
 
 # output_file_path = input("Enter output path: ")
-output_file_path = filedialog.askopenfile(title="SELECIONE O ARQUIVO DE SAÍDA")
-output_file_path = output_file_path.name
+output_file_path = "output.js"
 
 with open(input_path, 'r') as f:
     python_code = f.read()
