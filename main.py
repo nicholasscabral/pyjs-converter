@@ -38,8 +38,7 @@ def convert_python_to_javascript(python_code):
             python_keyword), js_keyword, python_code)
 
     # Replace '=' with 'var'
-    python_code = re.sub(
-        r'for\s+(\w+)\s+in\s+range\((.*?)\)', r'for (let \1 = 0; \1 < \2; \1++)', python_code)
+    python_code = re.sub(r'(\b\w+\b)\s*=\s*', 'var \\1 = ', python_code)
 
     # Replace Python-style string formatting with JavaScript-style string formatting
     python_code = re.sub(r'(\{.*?\})', '{$1}', python_code)
