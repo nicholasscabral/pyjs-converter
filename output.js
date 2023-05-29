@@ -44,3 +44,24 @@ if (z > 2) {
     }
     {
     }
+    console.log("Calculadora de potência")
+    var a = float(input("Digite a base\n"))
+    var b = int(input("Digite o expoente\n"))
+    }
+    {var counter = 0
+    var result = 1
+    }
+    {while counter < b:
+    result *= a
+    counter += 1
+    }
+    {console.log(result)
+    }
+    var senha = "123"
+    var senhaDigitada = input("Digite a senha")
+    }
+    {if(senhaDigitada != senha):
+    console.log("Acesso negado :(")
+    } else {
+    console.log("Acesso concedido :)")
+    }

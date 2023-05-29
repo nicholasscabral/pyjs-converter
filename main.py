@@ -1,6 +1,6 @@
-import re
 import json
 from tkinter import filedialog
+import re
 
 def is_python_code_valid(python_code):
     try:
