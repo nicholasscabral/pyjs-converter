@@ -6,7 +6,9 @@ counter = 0
 result = 1
 
 while counter < b:
-    result *= a
-    counter += 1
+    while counter < 10:
+        result *= a
+        counter += 1
+
 
 print(result)
