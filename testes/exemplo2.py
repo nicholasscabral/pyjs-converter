@@ -10,4 +10,4 @@ else:
         fatorial *= numero
         numero -= 1
 
-    print(f"O fatorial é {fatorial}.")
+    print("O fatorial é" + fatorial)

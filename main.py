@@ -94,6 +94,9 @@ if not is_python_code_valid(python_code):
 # Convert the Python code to JavaScript
 javascript_code = convert_python_to_javascript(python_code)
 
+# clear output file
+with open(output_file_path, 'w') as f:
+    f.write('')
 
 # Print the formatted JavaScript code
 formatted_code = re.sub(r';{2,}', ';', javascript_code)
