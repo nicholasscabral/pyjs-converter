@@ -47,10 +47,10 @@ def convert_python_to_javascript(python_code):
     python_code = re.sub(r'%\((.*?)\)[sd]', '{$1}', python_code)
 
     # Add semicolons at the end of statements if they don't already exist
-    python_code = re.sub(r'([^;])\n', '\\1;', python_code)
+    python_code = re.sub(r'([^;])\n', '\\1;\n', python_code)
 
     # Convert Python for loop to JavaScript
-    python_code = re.sub(r'for\s+(\w+)\s+in\s+Array\.from\(\{length:\s+(\d+)\}\)', r'for (var \1 = 0; \1 < \2; \1++)', python_code)
+    python_code = re.sub(r'for\s+(\w+)\s+in\s+Array\.from\(\{length:\s+(\d+)\}\)', r'for (var \1 = 0; \1 < \2; \1++) {', python_code)
 
     # Convert Python if statements to JavaScript
     python_code = re.sub(r'if\s+(.*?)\s*:', r'if (\1) {', python_code)
@@ -63,7 +63,7 @@ def convert_python_to_javascript(python_code):
     # Fix indentation
     lines = python_code.splitlines()
     new_lines = []
-    indent_level = -1
+    indent_level = 0
     for line in lines:
         if line.strip():
             line = '    ' * indent_level + line.strip()
@@ -75,8 +75,6 @@ def convert_python_to_javascript(python_code):
     javascript_code = '\n'.join(new_lines)
 
     return javascript_code
-
-
 
 
 # input_path = input('Enter input path: ')
@@ -99,7 +97,7 @@ javascript_code = convert_python_to_javascript(python_code)
 
 # Print the formatted JavaScript code
 formatted_code = re.sub(r';{2,}', ';', javascript_code)
-formatted_code = formatted_code[1:] + ';}'
+formatted_code = formatted_code[0:] + ';}'
 lines = formatted_code.split(';')
 for line in lines:
     if line:
