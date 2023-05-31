@@ -11,16 +11,10 @@ def is_python_code_valid(python_code):
         return False
 
 # Verify if input code has more than 20 lines (RF02)
-def count_lines(python_code):
-    lines = python_code.strip().split('\n')
-    return len(lines)
-
 def verify_lines(python_code):
-    num_lines = ccount_lines(python_code)
-    if num_lines > 20:
-        print("O código tem mais de 20 linhas.")
-    else:
-        print("O código tem 20 linhas ou menos.")
+    lines = python_code.strip().split('\n')
+    return len(lines) < 20
+
 
 def convert_python_to_javascript(python_code):
     # Define the dictionary to map Python keywords to JavaScript equivalents
