@@ -2,7 +2,7 @@ import json
 from tkinter import filedialog
 import re
 
-# Verify input code
+# Verify input code (RF04)
 def is_python_code_valid(python_code):
     try:
         compile(python_code, "<string>", "exec")
@@ -83,12 +83,9 @@ def convert_python_to_javascript(python_code):
     return javascript_code
 
 
-# Input path
+# Input path (RF01)
 input_path = filedialog.askopenfile(title="SELECIONE O ARQUIVO DE ENTRADA")
 input_path = input_path.name
-
-# Output file
-output_file_path = "output.js"
 
 # Read input file
 with open(input_path, 'r') as f:
@@ -107,11 +104,14 @@ if not verify_lines(python_code):
 # Convert the Python code to JavaScript
 javascript_code = convert_python_to_javascript(python_code)
 
+# Output file (RF03)
+output_file_path = "output.js"
+
 # Clear output file
 with open(output_file_path, 'w') as f:
     f.write('')
 
-# Print the formatted JavaScript code
+# Print the formatted JavaScript code (RF03)
 formatted_code = re.sub(r';{2,}', ';', javascript_code)
 formatted_code = formatted_code[0:] + ';}'
 lines = formatted_code.split(';')

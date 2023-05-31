@@ -6,8 +6,8 @@ Etapa para levantar inicialmente os requisitos funcionais, não-funcionais e as 
 
 1. O sistema deve poder ler um arquivo em python (extensão py)
 2. O sistema deve aceitar códigos de até 25 linhas
-3. O sistema deve apresentar como saída um arquivo com o código em javascript
-4. O sistema deve gerar uma pasta com os históricos
+3. O sistema deve escrever o código em Javascript num arquivo de saída
+4. O sistema deve converter apenas códigos em python compiláveis
 
 ## Requisitos não-funcionais
 
@@ -18,10 +18,10 @@ Etapa para levantar inicialmente os requisitos funcionais, não-funcionais e as 
 
 # Especificação de requisitos
 
-RF01: Subir arquivo em Python
-RF02: Limitar linhas de códigos
-RF03: Mostrar arquivo de saída em Javascript
-RF04: Visualizar últimas traduções
+RF01: Receber arquivo .py
+RF02: Limitar linhas do código de entrada
+RF03: Escrever código traduzido em arquivo de saída .js
+RF04: Converter códigos compiláveis
 
 NF01: Desempenho (tempo de resposta)
 NF02: Confiabilidade
@@ -32,7 +32,7 @@ NF04: Software (desenvolvimento)
 
 ## 1. Introdução
 
-Este documento apresenta uma descrição detalhada e clara dos requisitos do PY2JS. Assim, por meio deste documento, os stakeholders tomarão conhecimento e auxiliarão na validação das funcionalidades do sistema projetado e os desenvolvedores terão uma noção de como implementar essas funcionalidades. Em outras palavras, o documento visa a compreensão e validação dos requisitos pelos clientes e usuários, além de fornecer aos projetistas e desenvolvedores as informações necessárias para a implementação e também para a realização dos testes e homologação do sistema.
+Este documento apresenta uma descrição detalhada e clara dos requisitos do PYJS. Assim, por meio deste documento, os stakeholders tomarão conhecimento e auxiliarão na validação das funcionalidades do sistema projetado e os desenvolvedores terão uma noção de como implementar essas funcionalidades. Em outras palavras, o documento visa a compreensão e validação dos requisitos pelos clientes e usuários, além de fornecer aos projetistas e desenvolvedores as informações necessárias para a implementação e também para a realização dos testes e homologação do sistema.
 
 ### **1.1. Objetivos e escopo**
 
@@ -43,8 +43,6 @@ Dentre os objetivos deste documento estão o de listar da forma mais clara e obj
 - Seção 2: Descrição geral do sistema (descreve o escopo do sistema e seus usuários de maneira geral)
 - Seção 3: Requisitos Funcionais (especifica todos os requisitos funcionais planejados para o sistema)
 - Seção 4: Requisitos Não Funcionais (especifica todos os requisitos não funcionais planejados para o sistema)
-- Seção 5: Análise dos Requisitos (especifica as prioridades e dependências dos requisitos)
-- Seção 6: Glossário (apresenta definições de termos técnicos e relevantes)
 
 ### **1.3. Convenções, termos e abreviações**
 
@@ -60,7 +58,7 @@ Os requisitos devem ser identificados com um identificador único. A numeração
 
 A cada requisito será atribuída uma prioridade. A descrição de cada uma segue abaixo:
 **Essencial** é o requisito sem o qual o sistema não entra em funcionamento. Requisitos essenciais são requisitos imprescindíveis, que sem eles o sistema não funcionará, e por isso têm que ser implementados impreterivelmente.
-**Importante** é o requisito sem o qual o sistema entra em funcionamento, mas de forma não satisfatória. Requisitos importantes devem ser implementado, mas, se não forem, o sistema poderá se rimplantado e usado.
+**Importante** é o requisito sem o qual o sistema entra em funcionamento, mas de forma não satisfatória. Requisitos importantes devem ser implementado, mas, se não forem, o sistema poderá ser implementado e usado.
 **Desejável** é o requisito que não compromete as funcionalidades básicas do sistema, isto é, o sistema pode funcionar de forma satisfatória. Por isso, requisitos desejáveis podem ser deixados para ser implementados por último ou em próximas iterações.
 
 ## 2. Descrição geral do sistema
@@ -79,25 +77,25 @@ Algumas funcionalidades foram tidas pela equipe como aquelas que precisam de uma
 
 ## 3. Requisitos Funcionais
 
-### **3.1. Subir arquivo em Python [RF01]**
+### **3.1. Receber arquivos .py [RF01]**
 
 Prioridade: Essencial
-O sistema deve permitir que o usuário suba um arquivo com código em Python, extebsão py, para que possa realizar a sua tradução. Requisito básico para permitir que o usuário insira o arquivo e decida traduzi-lo. É a principal função do sistema.
+O sistema deve permitir que o usuário suba um arquivo com código em Python, extensão py, para que possa realizar a sua tradução. Requisito básico para permitir que o usuário insira o arquivo e decida traduzi-lo. É a principal função do sistema.
 
-### **3.2. Limitar linhas de códigos [RF02]**
+### **3.2. Limitar linhas do código de entrada [RF02]**
 
 Prioridade: Importante
-O sistema deve aceitar códigos de até 100 linhas, limitando a quantidade de código a ser traduzida pelo sistema e garantindo o desempenho e a confiabilidade.
+O sistema deve aceitar códigos de até 20 linhas, limitando a quantidade de código a ser traduzido pelo sistema e garantindo o desempenho e a confiabilidade.
 
-### **3.3. Mostrar arquivo de saída em Javascript [RF03]**
+### **3.3. Escrever código traduzido em arquivo de saída .js [RF03]**
 
 Prioridade: Essencial
-O sistema deve apresentar ao usuário (como saída) um arquivo com o código traduzido em Javascript. Requisito básico para permitir que o usuário tenha acesso ao código que foi traduzido, a partir daquele que foi feito o upload.
+O sistema deve apresentar ao usuário o código traduzido em Javascript em um arquivo de saída. Requisito básico para permitir que o usuário tenha acesso ao código que foi traduzido, a partir daquele que foi feito o upload.
 
-### **3.4. Visualizar últimas traduções [RF05]**
+### **3.4. Converter códigos compiláveis [RF05]**
 
-Prioridade: Importante
-O sistema deve permitir que o usuário visualize suas últimas 5 traduções, como um histórico das traduções realizadas anteriormente no sistema. O usuário deve ser capaz de visualizar as últimas traduções numa pasta de logs.
+Prioridade: Essencial
+O sistema deve converter apenas códigos em Python que sejam compiláveis, retornando erro caso não sejam. Requisitos básico para impedir a conversão de códigos não compiláveis e com bugs.
 
 ## 4. Requisitos Não Funcionais
 
@@ -119,8 +117,5 @@ O sistema deve ser desenvolvido de forma a permitir fácil manutenção e atuali
 ### **4.4. Software [NF05]**
 
 Prioridade: Essencial
-O sistema deve ser desenvolvido na linguagem Python e também deve guardar as últimas traduções.
+O sistema deve ser desenvolvido na linguagem Python.
 
-## 5. Análise dos Requisitos (em construção...)
-
-## 6. Glossário (em construção...)
