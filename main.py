@@ -2,6 +2,7 @@ import json
 from tkinter import filedialog
 import re
 
+# Verify input code
 def is_python_code_valid(python_code):
     try:
         compile(python_code, "<string>", "exec")
@@ -9,6 +10,17 @@ def is_python_code_valid(python_code):
     except SyntaxError:
         return False
 
+# Verify if input code has more than 20 lines (RF02)
+def count_lines(python_code):
+    lines = python_code.strip().split('\n')
+    return len(lines)
+
+def verify_lines(python_code):
+    num_lines = ccount_lines(python_code)
+    if num_lines > 20:
+        print("O código tem mais de 20 linhas.")
+    else:
+        print("O código tem 20 linhas ou menos.")
 
 def convert_python_to_javascript(python_code):
     # Define the dictionary to map Python keywords to JavaScript equivalents
@@ -77,24 +89,31 @@ def convert_python_to_javascript(python_code):
     return javascript_code
 
 
-# input_path = input('Enter input path: ')
+# Input path
 input_path = filedialog.askopenfile(title="SELECIONE O ARQUIVO DE ENTRADA")
 input_path = input_path.name
 
-# output_file_path = input("Enter output path: ")
+# Output file
 output_file_path = "output.js"
 
+# Read input file
 with open(input_path, 'r') as f:
     python_code = f.read()
 
+# Call verify function for input file
 if not is_python_code_valid(python_code):
     print('PYTHON CODE NOT COMPILABLE, EXITING...')
+    exit(1)
+
+# Call verify function count_lines for input file
+if not verify_lines(python_code):
+    print('PYTHON CODE HAS MORE THAN 20 LINES, EXITING...')
     exit(1)
 
 # Convert the Python code to JavaScript
 javascript_code = convert_python_to_javascript(python_code)
 
-# clear output file
+# Clear output file
 with open(output_file_path, 'w') as f:
     f.write('')
 
